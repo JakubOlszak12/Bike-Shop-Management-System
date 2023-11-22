@@ -1,1 +1,24 @@
+version: '3.3'
 services:
+  db:
+    image: mysql:5.7
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: 'db'
+      # Username
+      MYSQL_USER: ${MYSQLDB_USER}
+      # User password
+      MYSQL_PASSWORD: ${MYSQLDB_USER_PASSWORD}
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: ${MYSQLDB_ROOT_PASSWORD}
+    ports:
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+volumes:
+  my-db:
