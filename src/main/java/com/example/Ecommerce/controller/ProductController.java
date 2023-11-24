@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public Product getProduct(@PathVariable long id) throws IllegalAccessException {
-        throw new IllegalAccessException("Not implemented yet");
+    public Optional<Product> getProduct(@PathVariable long id) throws IllegalAccessException {
+        return productService.getProduct(id);
     }
 }
