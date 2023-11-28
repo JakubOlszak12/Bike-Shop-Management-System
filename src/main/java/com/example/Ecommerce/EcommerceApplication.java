@@ -22,11 +22,7 @@ public class EcommerceApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(){
 		return args -> {
-			Random rand = new Random();
-			for(int i = 1; i < 50; i++) {
-				Product product = new Product("Test "+ i, "description "+i, rand.nextDouble(9999 - 1300 + 1) + 1300);
-				productRepository.save(product);
-			}
+
 		};
 	}
 
