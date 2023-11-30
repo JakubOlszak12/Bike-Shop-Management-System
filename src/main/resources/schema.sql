@@ -22,15 +22,21 @@ CREATE TABLE category (
                           name VARCHAR(50) NOT NULL
 );
 
+CREATE TABLE role (
+                      id INTEGER AUTO_INCREMENT PRIMARY KEY,
+                      name VARCHAR(50) NOT NULL
+);
+
 CREATE TABLE user (
                       id INTEGER AUTO_INCREMENT PRIMARY KEY,
                       username VARCHAR(50) NOT NULL,
                       password VARCHAR(50) NOT NULL,
                       email VARCHAR(50) NOT NULL,
-                      role VARCHAR(50) NOT NULL,
+                      role_id INTEGER NOT NULL,
                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-                      edited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+                      edited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                      FOREIGN KEY (role_id) REFERENCES role(id)
+                  );
 
 CREATE TABLE size (
                       id INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -53,15 +59,12 @@ CREATE TABLE status (
 );
 
 
-CREATE TABLE role (
-                      id INTEGER AUTO_INCREMENT PRIMARY KEY,
-                      name VARCHAR(50) NOT NULL
-);
+
 
 CREATE TABLE product (
                          id INTEGER AUTO_INCREMENT PRIMARY KEY,
                          name VARCHAR(50) NOT NULL,
-                         description VARCHAR(255) NOT NULL,
+                         description VARCHAR(5000) NOT NULL,
                          category_id INTEGER NOT NULL,
                          size_id INTEGER NOT NULL,
                          brand_id INTEGER NOT NULL,
@@ -88,10 +91,10 @@ CREATE TABLE product (
 CREATE TABLE `order` (
                        id INTEGER AUTO_INCREMENT PRIMARY KEY,
                        user_id INTEGER NOT NULL,
-                       street VARCHAR(255) NOT NULL,
-                       postalCode VARCHAR(50) NOT NULL,
-                       city VARCHAR(50) NOT NULL,
-                       phoneNumber VARCHAR(50) NOT NULL,
+                       street VARCHAR(100) NOT NULL,
+                       postalCode VARCHAR(8) NOT NULL,
+                       city VARCHAR(30) NOT NULL,
+                       phoneNumber VARCHAR(12) NOT NULL,
                        email VARCHAR(50) NOT NULL,
                        price DECIMAL(10, 2) NOT NULL,
                        created_at TIMESTAMP NOT NULL,
