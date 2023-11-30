@@ -31,7 +31,7 @@ public class Invoice {
     private LocalDateTime paymentDate;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private Order order;
 
