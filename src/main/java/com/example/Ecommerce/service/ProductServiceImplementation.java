@@ -5,6 +5,8 @@ import com.example.Ecommerce.Exception.ProductException;
 import com.example.Ecommerce.model.Product;
 import com.example.Ecommerce.repository.ProductRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,5 +26,9 @@ public class ProductServiceImplementation implements ProductService{
     public Product getProduct(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ProductException(ProductError.PRODUCT_NOT_FOUND));
+    }
+    @Override
+    public Page<Product> getProductsPage(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 }

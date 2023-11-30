@@ -6,6 +6,8 @@ import com.example.Ecommerce.model.Product;
 import com.example.Ecommerce.service.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,6 +34,17 @@ public class ProductController {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(products);
+        }
+    }
+
+    @GetMapping("/productsPage")
+    public ResponseEntity<Page<Product>> getProductsPage(Pageable pageable) {
+        Page<Product> productsPage = productService.getProductsPage(pageable);
+
+        if (productsPage.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(productsPage);
         }
     }
 
