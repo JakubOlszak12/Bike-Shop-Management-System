@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,7 +40,7 @@ public class ProductController {
     }
 
     @GetMapping("/productsPage")
-    public ResponseEntity<Page<Product>> getProductsPage(Pageable pageable) {
+    public ResponseEntity<Page<Product>> getProductsPage(@PageableDefault(size = 10)@SortDefault("createdAt")Pageable pageable) {
         Page<Product> productsPage = productService.getProductsPage(pageable);
 
         if (productsPage.isEmpty()) {

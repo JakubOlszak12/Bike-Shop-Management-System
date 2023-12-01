@@ -86,7 +86,10 @@ CREATE TABLE product (
                          wheel VARCHAR(50) NOT NULL,
                          tire VARCHAR(50) NOT NULL,
                          pedals VARCHAR(50) NOT NULL,
-                         saddle VARCHAR(50) NOT NULL
+                         saddle VARCHAR(50) NOT NULL,
+                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+
 );
 
 CREATE TABLE `order` (

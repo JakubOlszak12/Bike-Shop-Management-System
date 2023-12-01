@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -59,7 +60,10 @@ public class Product {
     private String saddle;
     @NotNull
     private double price;
-
+    @NotNull
+    private LocalDateTime createdAt;
+    @NotNull
+    private LocalDateTime updatedAt;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
