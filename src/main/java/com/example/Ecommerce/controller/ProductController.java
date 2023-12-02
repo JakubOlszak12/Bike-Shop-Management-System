@@ -4,6 +4,7 @@ package com.example.Ecommerce.controller;
 import com.example.Ecommerce.Dto.ProductDto;
 import com.example.Ecommerce.Exception.ProductException;
 import com.example.Ecommerce.model.Product;
+import com.example.Ecommerce.repository.ProductRepository;
 import com.example.Ecommerce.service.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -53,10 +51,22 @@ public class ProductController {
 
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<ProductDto> getProduct(@PathVariable Long id) {
+    public ResponseEntity<ProductDto> getProductDto(@PathVariable Long id) {
         try {
-            ProductDto product = productService.getProduct(id);
+            ProductDto product = productService.getProductDto(id);
             return ResponseEntity.ok().body(product);
+        } catch (ProductException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,ex.getProductError().name(),ex);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", ex);
+        }
+    }
+
+    @DeleteMapping("/products/delete/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id){
+        try{
+            productService.deleteProduct(id);
+            return ResponseEntity.ok().body("Product successfully deleted");
         } catch (ProductException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,ex.getProductError().name(),ex);
         } catch (Exception ex) {

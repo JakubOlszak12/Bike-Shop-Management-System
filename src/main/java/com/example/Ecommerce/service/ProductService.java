@@ -13,10 +13,16 @@ import java.util.List;
 public interface ProductService {
 
     List<Product> getProducts();
-    ProductDto getProduct(Long id);
+    ProductDto getProductDto(Long id);
 
     Page<Product> getProductsPage(Pageable pageable);
 
     ProductDto mapToProductDto(Product product);
+
+    void deleteProduct(Long id);
+
+    Product saveProduct(ProductDto productDto);
+
+    Product getProduct(Long id);
 
 }

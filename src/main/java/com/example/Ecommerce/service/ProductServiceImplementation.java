@@ -24,12 +24,19 @@ public class ProductServiceImplementation implements ProductService{
     }
 
     @Override
-    public ProductDto getProduct(Long id) {
+    public ProductDto getProductDto(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductException(ProductError.PRODUCT_NOT_FOUND));
         return mapToProductDto(product);
 
     }
+
+    @Override
+    public Product getProduct(Long id) {
+        return productRepository.findById(id).
+                orElseThrow(() -> new ProductException(ProductError.PRODUCT_NOT_FOUND));
+    }
+
     @Override
     public Page<Product> getProductsPage(Pageable pageable) {
         return productRepository.findAll(pageable);
@@ -66,5 +73,19 @@ public class ProductServiceImplementation implements ProductService{
                 product.getSize().getName(),
                 product.getCategory().getName()
         );
+    }
+
+    @Override
+    public void deleteProduct(Long id){
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductException(ProductError.PRODUCT_NOT_FOUND));
+        productRepository.delete(product);
+    }
+
+    // TODO: 02.12.2023
+    @Override
+    public Product saveProduct(ProductDto productDto){
+        Product product = new Product();
+        return productRepository.save(product);
     }
 }
