@@ -1,6 +1,7 @@
 package com.example.Ecommerce.controller;
 
 
+import com.example.Ecommerce.Dto.ProductDto;
 import com.example.Ecommerce.Exception.ProductException;
 import com.example.Ecommerce.model.Product;
 import com.example.Ecommerce.service.ProductService;
@@ -52,9 +53,9 @@ public class ProductController {
 
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+    public ResponseEntity<ProductDto> getProduct(@PathVariable Long id) {
         try {
-            Product product = productService.getProduct(id);
+            ProductDto product = productService.getProduct(id);
             return ResponseEntity.ok().body(product);
         } catch (ProductException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,ex.getProductError().name(),ex);
