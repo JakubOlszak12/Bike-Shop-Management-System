@@ -23,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Transactional
+@RequestMapping("/api")
 public class ProductController {
 
     private final ProductService productService;
