@@ -1,4 +1,4 @@
-# Ecommerce-project
+# Bike Shop Management System
 
 
 Welcome to the Bike Shop Management System, a comprehensive application that enables efficient management of a bike shop's operations. This project utilizes Java Spring for the backend, React for the frontend, and employs RESTful APIs for seamless communication. The application is containerized using Docker and integrates with a MySQL database to store and manage data effectively.
