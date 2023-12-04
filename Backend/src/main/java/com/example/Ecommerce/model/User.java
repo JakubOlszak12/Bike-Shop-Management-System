@@ -47,5 +47,4 @@ public class User {
     private List<Invoice> invoicesList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Order> ordersList;
-}
+    private List<Order> ordersList;}
