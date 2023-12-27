@@ -50,6 +50,17 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/productsDtoPage")
+    public ResponseEntity<Page<ProductDto>> getProductsDtoPage(@PageableDefault(size = 10)@SortDefault("createdAt")Pageable pageable) {
+        Page<ProductDto> productsPage = productService.getProductsDtoPage(pageable);
+
+        if (productsPage.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(productsPage);
+        }
+    }
+
 
     @GetMapping("/products/{id}")
     public ResponseEntity<ProductDto> getProductDto(@PathVariable Long id) {
