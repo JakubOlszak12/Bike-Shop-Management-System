@@ -42,6 +42,11 @@ public class ProductServiceImplementation implements ProductService{
         return productRepository.findAll(pageable);
     }
 
+    public Page<ProductDto> getProductsDtoPage(Pageable pageable) {
+        Page<Product> productPage = productRepository.findAll(pageable);
+        return productPage.map(this::mapToProductDto);
+    }
+
     @Override
     public ProductDto mapToProductDto(Product product) {
         return new ProductDto(

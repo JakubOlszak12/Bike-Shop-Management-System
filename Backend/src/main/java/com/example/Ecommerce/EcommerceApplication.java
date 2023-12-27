@@ -3,6 +3,8 @@ package com.example.Ecommerce;
 import com.example.Ecommerce.model.*;
 import com.example.Ecommerce.repository.*;
 
+import com.thedeanda.lorem.Lorem;
+import com.thedeanda.lorem.LoremIpsum;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.CommandLineRunner;
@@ -33,11 +35,12 @@ public class EcommerceApplication {
 			sizeRepository.save(new Size(null,"M", new ArrayList<>()));
 			categoryRepository.save(new Category(null, "Road bikes", new ArrayList<>()));
 			Random random = new Random();
+			Lorem lorem = LoremIpsum.getInstance();
 			Optional<Category> category = categoryRepository.findById(1L);
 			Optional<Size> size = sizeRepository.findById(1L);
 			Optional<Brand> brand = brandRepository.findById(1L);
 			for(int i = 1;i<30;i++){
-				Product product = new Product(null,"Rower "+i,"Description "+i, random.nextInt(30), random.nextInt(2023- 2013 + 1)+ 2013,"fork " +i, "fork material "+i, "frame material "+i,"drive "+i, "front derailleur "+i,"rear derailleur "+i,"handle "+i, "crank "+i,"casette "+i,"brake "+i, "wheel "+i, "wheel "+i, "wheelSize "+i, "tire "+i, "pedals "+i, "saddle "+i, random.nextDouble(10000-4000+1)+4000, LocalDateTime.now(),LocalDateTime.now(),category.get(),size.get(),brand.get());
+				Product product = new Product(null,"Rower "+i,lorem.getParagraphs(2, 6), random.nextInt(30), random.nextInt(2023- 2013 + 1)+ 2013,"fork " +i, "fork material "+i, "frame material "+i,"drive "+i, "front derailleur "+i,"rear derailleur "+i,"handle "+i, "crank "+i,"casette "+i,"brake "+i, "wheel "+i, "wheel "+i, "wheelSize "+i, "tire "+i, "pedals "+i, "saddle "+i, random.nextDouble(10000-4000+1)+4000, LocalDateTime.now(),LocalDateTime.now(),category.get(),size.get(),brand.get());
 				productRepository.save(product);
 			}
 		};
