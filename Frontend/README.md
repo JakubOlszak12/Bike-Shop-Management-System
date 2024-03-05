@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# React Template
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository exists as a starting point for a new React 18 application (with hooks). The build system, testing, linting, formatting, compiling, spellchecking and more are all pre-configured.
 
-## Available Scripts
+This repository should be generic enough that most people can use it out of the box. It comes with an existing "hello world" application which you can build and run right away.
 
-In the project directory, you can run:
+It also includes all of the nice-to-haves to ensure that you code is high quality and follows best practices. This is very helpful for a beginner who needs nudges in the right direction but also helps an expert focus on the higher level problems and not worry about missing smaller errors.
 
-### `npm start`
+## Setup
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-   Be sure you have [the current LTS version of Node.js installed](https://nodejs.org/)
+-   If you are on Windows, you probably want to be using either [GitBash which comes with Git](https://git-scm.com/download/win) or [WSL](https://docs.microsoft.com/en-us/windows/wsl/install).
+-   Run `npm ci` to install dependencies
+-   Run `npm run start` to start the dev server and visit the link provided in the terminal to view it in your browser
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Core Dependencies Included
 
-### `npm test`
+-   [React](https://react.dev/learn) (JavaScript UI framework)
+-   [Webpack](https://webpack.js.org/) (Asset bundling)
+-   [TypeScript](https://www.typescriptlang.org/docs/handbook/intro.html) (JavaScript with Types)
+-   [Babel](https://babeljs.io/docs/en/) (Transpiling JavaScript for older browsers)
+-   [ESLint](https://eslint.org/) (Identifying and reporting errors in code)
+-   [Prettier](https://prettier.io/docs/en/index.html) (Code formatter)
+-   [CSpell](https://github.com/streetsidesoftware/cspell) (Code Spellchecker)
+-   [SCSS](https://sass-lang.com/guide) (Enhanced CSS)
+-   [Jest](https://jestjs.io/docs/en/getting-started) (Unit test framework)
+-   [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) (React unit test utilities)
+-   [Husky](https://typicode.github.io/husky) (Git hooks - run commands on commit)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## NPM scripts
 
-### `npm run build`
+-   `npm clean-install` - install all dependencies. _Do this first before anything else_
+-   `npm run start` - starts a local server which can be accessed at http://localhost:7579. As long as this server is running it'll auto refresh whenever you save changes.
+-   `npm run release` - creates a release build of your application. All output files will be located in the dist folder. This also runs all of the checks to ensure the code works, is formatted, etc.
+-   `npm run verify` - checks the application without building
+-   `npm run bundle-analysis` - opens a bundle analysis UI showing the file size of each dependency in your output JavaScript bundle.
+-   `npm run lint` - runs ESLint enforcing good coding style and habits and erroring if any are broken.
+    -   `npm run lint:fix` - fixes any auto-fixable ESLint errors
+-   `npm run format` - runs Prettier to reformat all files
+-   `npm run autofix` - fix all autofixable issues
+-   `npm run ts-check` - runs the TypeScript compiler to see TypeScript errors
+-   `npm run spellcheck` - runs CSpell to see any typos. If the word is misidentified, add it to `cspell.json`.
+-   `npm run test` - runs Jest and all unit tests
+-   `npm run clean` - removes all auto-generated files and dependencies
+-   `npm run list-outdated-dependencies` - lists the dependencies that have newer versions available with links to their repository and changelog
+-   `npm run update-dependencies` - update and install all outdated dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Why use this instead of create-react-app?
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Tools like create-react-app bring everything and the kitchen sink when setting up a new project. They are great to start quickly, but as soon as you want to customize or understand how it all works you'll have trouble. My goal is to expose all of the tools and show how easy it can be to configure from scratch. This makes it easier to debug and tweak settings to fit your needs.
