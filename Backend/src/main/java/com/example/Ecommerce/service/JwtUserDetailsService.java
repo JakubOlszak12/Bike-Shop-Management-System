@@ -2,7 +2,9 @@ package com.example.Ecommerce.service;
 
 
 import com.example.Ecommerce.Dto.UserDto;
+import com.example.Ecommerce.model.Role;
 import com.example.Ecommerce.model.User;
+import com.example.Ecommerce.repository.RoleRepository;
 import com.example.Ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +13,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -19,6 +23,8 @@ public class JwtUserDetailsService implements UserDetailsService {
     private UserRepository userDao;
     @Autowired
     private PasswordEncoder bcryptEncoder;
+    @Autowired
+    private RoleRepository roleRepository;
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
@@ -36,6 +42,9 @@ public class JwtUserDetailsService implements UserDetailsService {
         newUser.setUsername(user.getUsername());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
         newUser.setEmail(user.getEmail());
+        newUser.setCreated_at(LocalDateTime.now());
+        newUser.setEdited_at(LocalDateTime.now());
+        newUser.setRole(roleRepository.findByName("ROLE_USER"));
         return userDao.save(newUser);
     }
 }

@@ -29,7 +29,8 @@ public class EcommerceApplication {
 
 
 	@Bean
-	CommandLineRunner commandLineRunner(BrandRepository brandRepository, ProductRepository productRepository, SizeRepository sizeRepository, CategoryRepository categoryRepository){
+	CommandLineRunner commandLineRunner(BrandRepository brandRepository, ProductRepository productRepository, SizeRepository sizeRepository, CategoryRepository categoryRepository,
+										RoleRepository roleRepository){
 		return args -> {
 			brandRepository.save(new Brand(null,"Giant", new ArrayList<>()));
 			sizeRepository.save(new Size(null,"M", new ArrayList<>()));
@@ -43,6 +44,8 @@ public class EcommerceApplication {
 				Product product = new Product(null,"Rower "+i,lorem.getParagraphs(2, 6), random.nextInt(30), random.nextInt(2023- 2013 + 1)+ 2013,"fork " +i, "fork material "+i, "frame material "+i,"drive "+i, "front derailleur "+i,"rear derailleur "+i,"handle "+i, "crank "+i,"casette "+i,"brake "+i, "wheel "+i, "wheel "+i, "wheelSize "+i, "tire "+i, "pedals "+i, "saddle "+i, random.nextDouble(10000-4000+1)+4000, LocalDateTime.now(),LocalDateTime.now(),category.get(),size.get(),brand.get());
 				productRepository.save(product);
 			}
+			roleRepository.save(new Role(null, "ROLE_USER", new ArrayList<>()));
+			roleRepository.save(new Role(null, "ROLE_ADMIN", new ArrayList<>()));
 		};
 	}
 
