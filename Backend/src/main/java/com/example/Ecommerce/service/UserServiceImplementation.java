@@ -33,15 +33,26 @@ public class UserServiceImplementation implements UserService{
 
     @Override
     public void addRoleToUser(String userName, String roleName) {
-        User user = userRepository.findByUsername(userName).orElseThrow(
-                () -> new UserException(UserError.USER_NOT_FOUND));
-        Role role = roleRepository.findByName(roleName);
-        user.setRole(role);
+
     }
 
     @Override
     public User getUser(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
+        return null;
     }
+
+
+//    @Override
+//    public void addRoleToUser(String userName, String roleName) {
+//        User user = userRepository.findByUsername(userName).orElseThrow(
+//                () -> new UserException(UserError.USER_NOT_FOUND));
+//        Role role = roleRepository.findByName(roleName);
+//        user.setRole(role);
+//    }
+//
+//    @Override
+//    public User getUser(String username) {
+//        return userRepository.findByUsername(username)
+//                .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
+//    }
 }
