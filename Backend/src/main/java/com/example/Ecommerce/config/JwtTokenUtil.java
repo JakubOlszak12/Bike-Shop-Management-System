@@ -2,14 +2,18 @@ package com.example.Ecommerce.config;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+
 @Component
 public class JwtTokenUtil implements Serializable {
     private static final long serialVersionUID = -2550185165626007488L;
@@ -43,20 +47,32 @@ public class JwtTokenUtil implements Serializable {
         // podaj tokeny, dla których wygaśnięcie jest ignorowane
         return false;
     }
-    public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();return doGenerateToken(claims, userDetails.getUsername());
+
+    public List<String> getRolesFromToken(String token) {
+        return getAllClaimsFromToken(token).get("roles", List.class);
     }
-    private String doGenerateToken(Map<String, Object> claims,
-                                   String subject) {
 
 
+    public String generateToken(UserDetails userDetails) {
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(authority -> ((GrantedAuthority) authority).getAuthority())
+                .collect(Collectors.toList());
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", roles);
+
+        return doGenerateToken(claims, userDetails.getUsername());
+    }
+
+
+    private String doGenerateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder().setClaims(claims)
                 .setSubject(subject)
-                .setIssuedAt( new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(
-                        System.currentTimeMillis()+JWT_TOKEN_VALIDITY*1000))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
+
     public Boolean canTokenBeRefreshed(String token) {
         return (!isTokenExpired(token) || ignoreTokenExpiration(token));
     }

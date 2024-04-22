@@ -64,6 +64,7 @@ public class ProductController {
     }
 
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/products/{id}")
     public ResponseEntity<ProductDto> getProductDto(@PathVariable Long id) {
         try {

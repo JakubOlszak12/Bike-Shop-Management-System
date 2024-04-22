@@ -2,6 +2,7 @@ SET FOREIGN_KEY_CHECKS=0;
 Drop table if exists user;
 Drop table if exists `order`;
 drop table if exists role;
+drop table if exists user_roles;
 drop table if exists order_detail;
 drop table if exists brand;
 drop table if exists category;
@@ -30,12 +31,10 @@ CREATE TABLE role (
 CREATE TABLE user (
                       id INTEGER AUTO_INCREMENT PRIMARY KEY,
                       username VARCHAR(50) NOT NULL,
-                      password VARCHAR(50) NOT NULL,
+                      password VARCHAR(255) NOT NULL,
                       email VARCHAR(50) NOT NULL,
-                      role_id INTEGER NOT NULL,
                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-                      edited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                      FOREIGN KEY (role_id) REFERENCES role(id)
+                      edited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                   );
 
 CREATE TABLE size (
@@ -133,6 +132,14 @@ CREATE TABLE invoice (
                          paymentDate TIMESTAMP NOT NULL,
                          FOREIGN KEY (user_id) REFERENCES user(id),
                          FOREIGN KEY (order_id) REFERENCES `order`(id)
+);
+
+CREATE TABLE user_roles (
+                            user_id INTEGER NOT NULL,
+                            roles_id INTEGER NOT NULL,
+                            PRIMARY KEY (user_id, roles_id),
+                            FOREIGN KEY (user_id) REFERENCES user(id),
+                            FOREIGN KEY (roles_id) REFERENCES role(id)
 );
 
 
