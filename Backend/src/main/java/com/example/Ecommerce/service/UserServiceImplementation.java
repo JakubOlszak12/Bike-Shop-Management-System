@@ -3,8 +3,10 @@ package com.example.Ecommerce.service;
 import com.example.Ecommerce.Dto.UserDto;
 import com.example.Ecommerce.Exception.UserError;
 import com.example.Ecommerce.Exception.UserException;
+import com.example.Ecommerce.model.Order;
 import com.example.Ecommerce.model.Role;
 import com.example.Ecommerce.model.User;
+import com.example.Ecommerce.repository.OrderRepository;
 import com.example.Ecommerce.repository.RoleRepository;
 import com.example.Ecommerce.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -22,6 +25,7 @@ import java.util.ArrayList;
 
 // TODO: 04.12.2023
 public class UserServiceImplementation implements UserService{
+    private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
@@ -47,26 +51,29 @@ public class UserServiceImplementation implements UserService{
 
     @Override
     public void addRoleToUser(String userName, String roleName) {
-
+        User user = userRepository.findByUsername(userName).orElseThrow(
+                () -> new UserException(UserError.USER_NOT_FOUND));
+        Role role = roleRepository.findByName(roleName);
+        user.getRoles().add(role);
     }
 
     @Override
     public User getUser(String username) {
-        return null;
+        return userRepository.findByUsername(username)
+             .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
     }
 
+    @Override
+    public List<Order> getUserOrderList(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
+        return orderRepository.findAllByUserId(user.getId());
+    }
 
-//    @Override
-//    public void addRoleToUser(String userName, String roleName) {
-//        User user = userRepository.findByUsername(userName).orElseThrow(
-//                () -> new UserException(UserError.USER_NOT_FOUND));
-//        Role role = roleRepository.findByName(roleName);
-//        user.setRole(role);
-//    }
-//
-//    @Override
-//    public User getUser(String username) {
-//        return userRepository.findByUsername(username)
-//                .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
-//    }
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
+    }
+
 }
