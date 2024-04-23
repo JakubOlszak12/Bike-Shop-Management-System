@@ -31,7 +31,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     private RoleRepository roleRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findByUsername(username);
+        User user = userDao.findByUsername(username).get();
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
