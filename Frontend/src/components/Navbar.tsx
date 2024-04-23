@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import { useEffect, useState, type ReactElement } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 interface NavBarProps {
@@ -7,7 +7,8 @@ interface NavBarProps {
 
 export function NavBar({ isAuthenticated }: NavBarProps): ReactElement {
     const navigation = useNavigate();
-
+    const [cartItemCount, setCartItemCount] = useState(0);
+    
     const handleLogout = () => {
         // Clear the token from cookies
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -18,6 +19,12 @@ export function NavBar({ isAuthenticated }: NavBarProps): ReactElement {
         // Redirect to /clients
         navigation("/clients");
     };
+
+    useEffect(() => {
+        // Retrieve cart items count from local storage
+        const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
+        setCartItemCount(cartItems.length);
+    }, []);
 
 
     return (
@@ -30,34 +37,55 @@ export function NavBar({ isAuthenticated }: NavBarProps): ReactElement {
             <div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <NavLink
-                            to="/"
-                            className="nav-item"
-                        >
-                            <a className="nav-link" href="/">Products</a>
-                        </NavLink>
+                            <NavLink
+                                to="/"
+                                className="nav-item"
+                            >
+                                <span className="nav-link">Products</span>
+                            </NavLink>
                     </li>
-                
                 </ul>
 
                 <ul className="navbar-nav">
                     <li className="nav-item">
                         {isAuthenticated ? (
                             <NavLink
-                                to="/logout"
+                                to="/login"
                                 className="nav-item"
                                 onClick={handleLogout} // Call handleLogout function on click
                             >
-                                <a className="nav-link" href="#3">Logout</a>
+                                <a className="nav-link" href="/login">Logout</a>
                             </NavLink>
                         ) : (
                             <NavLink
                                 to="/login"
                                 className="nav-item"
                             >
-                                <a className="nav-link" href="#3">Login</a>
+                                <span className="nav-link">Login</span>
                             </NavLink>
                         )}
+                    </li>
+                    <li className="nav-item">
+                        {isAuthenticated && (
+                            <NavLink
+                            to="/profile"
+                            className="nav-item"
+                        >
+                            <span className="nav-link">My Profile</span>
+                        </NavLink>
+                        )}
+                    </li>
+                    <li className="nav-item position-relative">
+                        
+                    <NavLink
+                                to="/cart"
+                                className="nav-item"
+                            >
+                                <span className="nav-link">
+                                <i className="fa-solid fa-cart-shopping"></i>
+                                <span className="badge badge-pill bg-secondary cart-badge">{cartItemCount}</span>
+                            </span>
+                            </NavLink>
                     </li>
                 </ul>
             </div>

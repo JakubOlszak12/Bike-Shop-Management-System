@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-export function Login() {
+export function Register() {
   const [errorMessage, setErrorMessage] = useState('');
   const navigation = useNavigate();
 
@@ -10,21 +10,28 @@ export function Login() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const username = formData.get('username') as string;
-    const password = formData.get('password')  as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const confirmPassword = formData.get('confirmPassword') as string;
 
     // Simple data validation
-    if (!username.trim() || !password.trim()) {
-      setErrorMessage('Please enter both username and password');
+    if (!username.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
+      setErrorMessage('Please fill in all fields');
       return;
     }
 
-    // Send your request with username and password
-    fetch('http://localhost:8080/authenticate', {
+    if (password !== confirmPassword) {
+      setErrorMessage('Passwords do not match');
+      return;
+    }
+
+    // Send your registration request with username, email, and password
+    fetch('http://localhost:8080/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, email, password }),
     })
       .then((response) => {
         if (!response.ok) {
@@ -33,28 +40,20 @@ export function Login() {
         return response.json();
       })
       .then((data) => {
-        setCookie('token', data.token, 7);
+        // Handle successful registration
         console.log(data);
         navigation('/');
-        window.location.reload();
       })
       .catch((error) => {
         // Handle errors
-        setErrorMessage('Invalid username or password');
+        setErrorMessage('Registration failed');
       });
-  }
-
-  function setCookie(name: string, value: string, days: number) {
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    const expires = 'expires=' + date.toUTCString();
-    document.cookie = name + '=' + value + ';' + expires + ';path=/';
   }
 
   return (
     <>
       <div className="container mt-5">
-        <h2 style={{ textAlign: 'center' }}>Log in</h2>
+        <h2 style={{ textAlign: 'center' }}>Register</h2>
         {errorMessage && <div style={{ color: 'red', textAlign:'center' }}>{errorMessage}</div>}
         <Form onSubmit={handleSubmit} className="w-50 mx-auto">
           <Form.Group controlId="formUsername">
@@ -62,16 +61,28 @@ export function Login() {
             <Form.Control type="text" name="username" placeholder="Enter your username" />
           </Form.Group>
 
+          <Form.Group controlId="formEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="email" name="email" placeholder="Enter your email" />
+          </Form.Group>
+
           <Form.Group controlId="formPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" name="password" placeholder="Enter your password" />
           </Form.Group>
+
+          <Form.Group controlId="formConfirmPassword">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control type="password" name="confirmPassword" placeholder="Confirm your password" />
+          </Form.Group>
+
           <br />
           <div className="text-center">
+          
             <Button variant="primary" type="submit">
-              Login
+              Register
             </Button>
-            <p className="mt-3">Don't have an account? <a href="/register">Register</a></p>
+            <p className="mt-3">Already have an account? <a href="/login">Login</a></p>
           </div>
         </Form>
       </div>
