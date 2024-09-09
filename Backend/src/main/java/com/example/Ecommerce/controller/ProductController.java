@@ -88,4 +88,17 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", ex);
         }
     }
+
+    @GetMapping("/products/category")
+    public ResponseEntity<Page<ProductDto>> getProductsByCategoryDtoPage(@RequestParam String category, @PageableDefault(size = 10)@SortDefault("createdAt")Pageable pageable) {
+        try {
+            System.out.println(category);
+            Page<ProductDto> productsPage = productService.findProductsByCategoryName(pageable, category);
+            return ResponseEntity.ok().body(productsPage);
+        } catch (ProductException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,ex.getProductError().name(),ex);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", ex);
+        }
+    }
 }

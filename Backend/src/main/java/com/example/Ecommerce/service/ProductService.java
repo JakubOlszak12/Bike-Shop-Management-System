@@ -26,4 +26,5 @@ public interface ProductService {
 
     Product getProduct(Long id);
 
+    Page<ProductDto> findProductsByCategoryName(Pageable pageable, String category);
 }
