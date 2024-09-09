@@ -35,7 +35,11 @@ export function Register() {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          // If the response has an error, we try to extract the error message from the response body
+          return response.json().then((errorData) => {
+            console.log(errorData)
+            throw new Error(errorData.message);
+          });
         }
         return response.json();
       })
@@ -46,7 +50,7 @@ export function Register() {
       })
       .catch((error) => {
         // Handle errors
-        setErrorMessage('Registration failed');
+        setErrorMessage(error.message);
       });
   }
 
