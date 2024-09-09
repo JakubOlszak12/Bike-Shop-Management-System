@@ -19,7 +19,6 @@ public interface ProductService {
 
     Page<ProductDto> getProductsDtoPage(Pageable pageable);
 
-    ProductDto mapToProductDto(Product product);
 
     void deleteProduct(Long id);
 

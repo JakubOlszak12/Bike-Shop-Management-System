@@ -20,4 +20,8 @@ public interface UserService {
     List<Order> getUserOrderList(String username);
 
     User getUserById(Long id);
+
+    User getUserByEmail(String email);
+
+    User getUserByEmailOrUsername(String email, String username);
 }

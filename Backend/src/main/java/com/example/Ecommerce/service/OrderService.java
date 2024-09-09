@@ -1,5 +1,6 @@
 package com.example.Ecommerce.service;
 
+import com.example.Ecommerce.Dto.OrderDto;
 import com.example.Ecommerce.model.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +15,7 @@ public interface OrderService {
 
     Order saveOrder(Order order);
 
-    Order getOrder(Long id);
+    OrderDto getOrder(Long id);
 
 
 
