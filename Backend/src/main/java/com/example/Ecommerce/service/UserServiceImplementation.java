@@ -76,4 +76,15 @@ public class UserServiceImplementation implements UserService{
                 .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
     }
 
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
+    }
+
+    @Override
+    public User getUserByEmailOrUsername(String email, String username) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
+    }
 }

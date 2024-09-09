@@ -2,6 +2,8 @@ package com.example.Ecommerce.service;
 
 
 import com.example.Ecommerce.Dto.UserDto;
+import com.example.Ecommerce.Exception.UserError;
+import com.example.Ecommerce.Exception.UserException;
 import com.example.Ecommerce.model.Role;
 import com.example.Ecommerce.model.User;
 import com.example.Ecommerce.repository.RoleRepository;
@@ -16,10 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -50,15 +49,28 @@ public class JwtUserDetailsService implements UserDetailsService {
         return authorities;
     }
     public User save(UserDto user) {
+        Optional<User> existingUser = userDao.findByEmailOrUsername(user.getEmail(), user.getUsername());
+        if (existingUser.isPresent()) {
+            if (existingUser.get().getEmail().equals(user.getEmail())) {
+                throw new UserException(UserError.USER_EMAIL_NOT_AVAILABLE);
+            } else {
+                throw new UserException(UserError.USER_LOGIN_NOT_AVAILABLE);
+            }
+        }
+
         User newUser = new User();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
         newUser.setEmail(user.getEmail());
-        newUser.setCreated_at(LocalDateTime.now());
-        newUser.setEdited_at(LocalDateTime.now());
+        LocalDateTime currentTime = LocalDateTime.now();
+        newUser.setCreated_at(currentTime);
+        newUser.setEdited_at(currentTime);
         Role role = roleRepository.findByName("ROLE_USER");
         newUser.getRoles().add(role);
+
+
         return userDao.save(newUser);
     }
+
 }
 

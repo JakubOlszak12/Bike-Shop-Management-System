@@ -3,8 +3,10 @@ package com.example.Ecommerce.service;
 import com.example.Ecommerce.Exception.OrderError;
 import com.example.Ecommerce.Exception.OrderException;
 import com.example.Ecommerce.model.Order;
+import com.example.Ecommerce.Dto.OrderDto;
 import com.example.Ecommerce.repository.OrderRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderServiceImplementation implements OrderService{
     private final OrderRepository orderRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public List<Order> getOrders() {
@@ -33,8 +36,9 @@ public class OrderServiceImplementation implements OrderService{
     }
 
     @Override
-    public Order getOrder(Long id) {
-        return orderRepository.findById(id).
+    public OrderDto getOrder(Long id) {
+        Order order =  orderRepository.findById(id).
                 orElseThrow(() -> new OrderException(OrderError.ORDER_NOT_FOUND));
+        return modelMapper.map(order, OrderDto.class);
     }
 }

@@ -48,7 +48,7 @@ public class WebSecurityConfig {
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/authenticate","/register").permitAll()
+                        .requestMatchers("/authenticate","/register","**").permitAll()
                         .anyRequest().authenticated())
                 // sesja nie przechowujestanu użytkownika.
                 .exceptionHandling(

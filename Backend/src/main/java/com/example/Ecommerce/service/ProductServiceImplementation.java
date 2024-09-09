@@ -6,6 +6,7 @@ import com.example.Ecommerce.Exception.ProductException;
 import com.example.Ecommerce.model.Product;
 import com.example.Ecommerce.repository.ProductRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductServiceImplementation implements ProductService{
     private final ProductRepository productRepository;
+    private final ModelMapper modelMapper;
 
 
     @Override
@@ -27,7 +29,7 @@ public class ProductServiceImplementation implements ProductService{
     public ProductDto getProductDto(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductException(ProductError.PRODUCT_NOT_FOUND));
-        return mapToProductDto(product);
+        return modelMapper.map(product, ProductDto.class);
 
     }
 
@@ -44,40 +46,7 @@ public class ProductServiceImplementation implements ProductService{
 
     public Page<ProductDto> getProductsDtoPage(Pageable pageable) {
         Page<Product> productPage = productRepository.findAll(pageable);
-        return productPage.map(this::mapToProductDto);
-    }
-
-    @Override
-    public ProductDto mapToProductDto(Product product) {
-        return new ProductDto(
-                product.getId(),
-                product.getName(),
-                product.getDescription(),
-                product.getQuantity(),
-                product.getProductionYear(),
-                product.getFork(),
-                product.getForkMaterial(),
-                product.getFrameMaterial(),
-                product.getDrive(),
-                product.getFrontDerailleur(),
-                product.getRearDerailleur(),
-                product.getHandle(),
-                product.getCrank(),
-                product.getCassette(),
-                product.getBrakeType(),
-                product.getBrake(),
-                product.getWheel(),
-                product.getWheelSize(),
-                product.getTire(),
-                product.getPedals(),
-                product.getSaddle(),
-                product.getPrice(),
-                product.getCreatedAt(),
-                product.getUpdatedAt(),
-                product.getBrand().getName(),
-                product.getSize().getName(),
-                product.getCategory().getName()
-        );
+        return productPage.map((element) -> modelMapper.map(element, ProductDto.class));
     }
 
     @Override

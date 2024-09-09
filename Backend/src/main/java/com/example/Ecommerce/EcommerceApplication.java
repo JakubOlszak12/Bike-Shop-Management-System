@@ -7,6 +7,7 @@ import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,12 +30,19 @@ public class EcommerceApplication {
 
 
 	@Bean
+	public ModelMapper getModelMapper() {
+		return new ModelMapper();
+	}
+	@Bean
 	CommandLineRunner commandLineRunner(BrandRepository brandRepository, ProductRepository productRepository, SizeRepository sizeRepository, CategoryRepository categoryRepository,
 										RoleRepository roleRepository){
 		return args -> {
 			brandRepository.save(new Brand(null,"Giant", new ArrayList<>()));
 			sizeRepository.save(new Size(null,"M", new ArrayList<>()));
 			categoryRepository.save(new Category(null, "Road bikes", new ArrayList<>()));
+			categoryRepository.save(new Category(null, "Mountain bikes", new ArrayList<>()));
+			categoryRepository.save(new Category(null, "Gravel bikes", new ArrayList<>()));
+			categoryRepository.save(new Category(null, "Cross bikes", new ArrayList<>()));
 			Random random = new Random();
 			Lorem lorem = LoremIpsum.getInstance();
 			Optional<Category> category = categoryRepository.findById(1L);
