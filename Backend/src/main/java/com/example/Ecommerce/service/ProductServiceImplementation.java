@@ -62,4 +62,10 @@ public class ProductServiceImplementation implements ProductService{
         Product product = new Product();
         return productRepository.save(product);
     }
+
+    @Override
+    public Page<ProductDto> findProductsByCategoryName(Pageable pageable, String category) {
+        Page<Product> productPage = productRepository.findProductsByCategoryName(category, pageable);
+        return productPage.map((element) -> modelMapper.map(element, ProductDto.class));
+    }
 }
