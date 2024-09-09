@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, type FormEvent } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,9 +6,9 @@ export function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const navigation = useNavigate();
 
-  function handleSubmit(event) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.target);
+    const formData = new FormData(event.currentTarget);
     const username = formData.get('username') as string;
     const password = formData.get('password')  as string;
 
