@@ -13,7 +13,7 @@ public interface OrderService {
 
     Page<Order> getOrdersPage(Pageable pageable);
 
-    Order saveOrder(Order order);
+    Order saveOrder(OrderDto order);
 
     OrderDto getOrder(Long id);
 
