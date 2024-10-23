@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1be94e9e-7a1f-410a-8e04-589b40c59e84" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/Ecommerce/Helpers/PerformanceMetrics.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/Ecommerce/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/Ecommerce/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/Ecommerce/repository/OrderRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/Ecommerce/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/Ecommerce/service/OrderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/src/main/java/com/example/Ecommerce/service/OrderServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/src/main/java/com/example/Ecommerce/service/OrderServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/components/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/Login.tsx" afterDir="false" />
@@ -45,6 +46,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "com.codeium.enabled": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "G:/project/Ecommerce",
@@ -75,6 +77,7 @@
       <workItem from="1712327364450" duration="2891000" />
       <workItem from="1712336723953" duration="2392000" />
       <workItem from="1729592207070" duration="1881000" />
+      <workItem from="1729682687420" duration="600000" />
     </task>
     <servers />
   </component>
