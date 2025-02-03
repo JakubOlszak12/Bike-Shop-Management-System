@@ -35,7 +35,7 @@ public class EcommerceApplication {
 	}
 	@Bean
 	CommandLineRunner commandLineRunner(BrandRepository brandRepository, ProductRepository productRepository, SizeRepository sizeRepository, CategoryRepository categoryRepository,
-										RoleRepository roleRepository){
+										RoleRepository roleRepository, DeliveryMethodRepository deliveryMethodRepository, PaymentMethodRepository paymentMethodRepository, StatusRepository statusRepository, UserRepository userRepository){
 		return args -> {
 			brandRepository.save(new Brand(null,"Giant", new ArrayList<>()));
 			brandRepository.save(new Brand(null,"Kross", new ArrayList<>()));
@@ -52,6 +52,17 @@ public class EcommerceApplication {
 			categoryRepository.save(new Category(null, "Mountain bikes", new ArrayList<>()));
 			categoryRepository.save(new Category(null, "Gravel bikes", new ArrayList<>()));
 			categoryRepository.save(new Category(null, "Cross bikes", new ArrayList<>()));
+			deliveryMethodRepository.save(new DeliveryMethod(null, "DHL"));
+			deliveryMethodRepository.save(new DeliveryMethod(null, "InPost"));
+			deliveryMethodRepository.save(new DeliveryMethod(null, "UPS"));
+			deliveryMethodRepository.save(new DeliveryMethod(null, "DPD"));
+			paymentMethodRepository.save(new PaymentMethod(null,"Credit Card"));
+			paymentMethodRepository.save(new PaymentMethod(null,"BLIK"));
+			paymentMethodRepository.save(new PaymentMethod(null,"Cash"));
+			statusRepository.save(new Status(null,"Pending"));
+			statusRepository.save(new Status(null,"Canceled"));
+			statusRepository.save(new Status(null,"Completed"));
+
 			Random random = new Random();
 			Lorem lorem = LoremIpsum.getInstance();
 
@@ -67,6 +78,11 @@ public class EcommerceApplication {
 			}
 			roleRepository.save(new Role(null, "ROLE_USER"));
 			roleRepository.save(new Role(null, "ROLE_ADMIN"));
+			ArrayList<Role> roles = new ArrayList<>();
+			Role role = roleRepository.findByName("ROLE_USER");
+			roles.add(role);
+			User user = new User(null, "Andrew", "test", "test@test.com", LocalDateTime.now(), LocalDateTime.now(), roles,new ArrayList<Invoice>(),new ArrayList<CustomerOrder>());
+			userRepository.save(user);
 		};
 	}
 

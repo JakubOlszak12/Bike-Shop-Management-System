@@ -15,7 +15,4 @@ public class PaymentMethod {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-
-    @OneToMany(mappedBy = "paymentMethod", cascade = CascadeType.ALL)
-    private List<Order> ordersList;
 }

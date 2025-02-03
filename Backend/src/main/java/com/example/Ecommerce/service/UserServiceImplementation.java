@@ -3,10 +3,10 @@ package com.example.Ecommerce.service;
 import com.example.Ecommerce.Dto.UserDto;
 import com.example.Ecommerce.Exception.UserError;
 import com.example.Ecommerce.Exception.UserException;
-import com.example.Ecommerce.model.Order;
+import com.example.Ecommerce.model.CustomerOrder;
 import com.example.Ecommerce.model.Role;
 import com.example.Ecommerce.model.User;
-import com.example.Ecommerce.repository.OrderRepository;
+import com.example.Ecommerce.repository.CustomerOrderRepository;
 import com.example.Ecommerce.repository.RoleRepository;
 import com.example.Ecommerce.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -25,7 +25,7 @@ import java.util.List;
 
 // TODO: 04.12.2023
 public class UserServiceImplementation implements UserService{
-    private final OrderRepository orderRepository;
+    private final CustomerOrderRepository orderRepository;
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
@@ -64,7 +64,7 @@ public class UserServiceImplementation implements UserService{
     }
 
     @Override
-    public List<Order> getUserOrderList(String username) {
+    public List<CustomerOrder> getUserOrderList(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
         return orderRepository.findAllByUserId(user.getId());

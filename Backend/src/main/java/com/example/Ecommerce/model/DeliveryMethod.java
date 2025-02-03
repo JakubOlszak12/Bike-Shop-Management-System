@@ -19,7 +19,4 @@ public class DeliveryMethod {
     private Long id;
 
     private String name;
-
-    @OneToMany(mappedBy = "deliveryMethod", cascade = CascadeType.ALL)
-    private List<Order> ordersList;
 }

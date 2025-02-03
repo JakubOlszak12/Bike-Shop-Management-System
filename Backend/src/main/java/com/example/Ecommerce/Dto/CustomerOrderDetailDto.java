@@ -11,10 +11,11 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderDetailDto {
+public class CustomerOrderDetailDto {
     private Long id;
     private int quantity;
     private double unitPrice;
     private double totalPrice;
-    private Long orderId;
+    private Long customerOrderId;
+    private Long productId;
 }

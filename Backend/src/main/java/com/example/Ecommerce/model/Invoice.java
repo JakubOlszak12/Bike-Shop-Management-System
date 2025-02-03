@@ -32,8 +32,8 @@ public class Invoice {
 
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JoinColumn(name = "customer_order_id")
+    private CustomerOrder customerOrder;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
