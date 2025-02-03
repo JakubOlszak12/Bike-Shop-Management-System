@@ -37,7 +37,6 @@ public class CustomerOrderServiceImplementation implements CustomerOrderService{
         return orderPage.map((element) -> modelMapper.map(element, CustomerOrderDto.class));
     }
 
-    // TODO: 05.12.2023  
     @Override
     public CustomerOrder saveOrder(CustomerOrderDto orderDto) {
         CustomerOrder order = new CustomerOrder();
