@@ -1,9 +1,9 @@
 SET FOREIGN_KEY_CHECKS=0;
 Drop table if exists user;
-Drop table if exists `order`;
+Drop table if exists customer_order;
 drop table if exists role;
 drop table if exists user_roles;
-drop table if exists order_detail;
+drop table if exists customer_order_detail;
 drop table if exists brand;
 drop table if exists category;
 drop table if exists delivery_method;
@@ -93,7 +93,7 @@ CREATE TABLE product (
                          FOREIGN KEY (size_id) REFERENCES size(id)
 );
 
-CREATE TABLE `order` (
+CREATE TABLE customer_order (
                          id INTEGER AUTO_INCREMENT PRIMARY KEY,
                          user_id INTEGER NOT NULL,
                          street VARCHAR(100) NOT NULL,
@@ -111,14 +111,14 @@ CREATE TABLE `order` (
                          FOREIGN KEY (delivery_method_id) REFERENCES delivery_method(id)
 );
 
-CREATE TABLE order_detail (
+CREATE TABLE customer_order_detail (
                               id INTEGER AUTO_INCREMENT PRIMARY KEY,
-                              order_id INTEGER NOT NULL,
+                              customer_order_id INTEGER NOT NULL,
                               product_id INTEGER NOT NULL,
                               quantity INTEGER NOT NULL,
                               unit_price DECIMAL(10, 2) NOT NULL,
                               total_price DECIMAL(10, 2) NOT NULL,
-                              FOREIGN KEY (order_id) REFERENCES `order`(id),
+                              FOREIGN KEY (customer_order_id) REFERENCES customer_order(id),
                               FOREIGN KEY (product_id) REFERENCES product(id)
 );
 
@@ -127,12 +127,12 @@ CREATE TABLE order_detail (
 CREATE TABLE invoice (
                          id INTEGER AUTO_INCREMENT PRIMARY KEY,
                          user_id INTEGER NOT NULL,
-                         order_id INTEGER NOT NULL,
+                         customer_order_id INTEGER NOT NULL,
                          tax DECIMAL(10, 2) NOT NULL,
                          value DECIMAL(10, 2) NOT NULL,
                          payment_date TIMESTAMP NOT NULL,
                          FOREIGN KEY (user_id) REFERENCES user(id),
-                         FOREIGN KEY (order_id) REFERENCES `order`(id)
+                         FOREIGN KEY (customer_order_id) REFERENCES customer_order(id)
 );
 
 CREATE TABLE user_roles (

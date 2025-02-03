@@ -1,20 +1,21 @@
 package com.example.Ecommerce.Dto;
 
-import com.example.Ecommerce.model.Order;
+import com.example.Ecommerce.model.CustomerOrder;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
- * DTO for {@link Order}
+ * DTO for {@link CustomerOrder}
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDto{
+public class CustomerOrderDto{
     Long id;
     String street;
     String postalCode;
@@ -24,10 +25,8 @@ public class OrderDto{
     LocalDateTime created_at;
     Long invoiceId;
     Long paymentMethodId;
-    String paymentMethodName;
     Long deliveryMethodId;
-    String deliveryMethodName;
     Long statusId;
-    String statusName;
     Long userId;
+    ArrayList<CustomerOrderDetailDto> orderDetails;
 }

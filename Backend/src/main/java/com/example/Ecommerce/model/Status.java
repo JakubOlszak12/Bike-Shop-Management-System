@@ -22,6 +22,4 @@ public class Status {
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "status", cascade = CascadeType.ALL)
-    private List<Order> orderList;
 }

@@ -50,6 +50,6 @@ public class User {
     private List<Invoice> invoicesList;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
-    private List<Order> ordersList;
+    private List<CustomerOrder> customerOrderList;
 
 }

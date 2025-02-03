@@ -7,14 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderDetail {
+public class CustomerOrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,10 +27,10 @@ public class OrderDetail {
     private double totalPrice;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    @JoinColumn(name = "customerOrder_id", nullable = false)
+    private CustomerOrder customerOrder;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false) // Assuming this is the foreign key in your order_detail table
-    private Product product; // Reference to the Product entity
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 }

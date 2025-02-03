@@ -1,6 +1,6 @@
 package com.example.Ecommerce.service;
 
-import com.example.Ecommerce.model.Order;
+import com.example.Ecommerce.model.CustomerOrder;
 import com.example.Ecommerce.model.Role;
 import com.example.Ecommerce.model.User;
 import com.example.Ecommerce.Dto.UserDto;
@@ -17,7 +17,7 @@ public interface UserService {
 
     User getUser(String username);
 
-    List<Order> getUserOrderList(String username);
+    List<CustomerOrder> getUserOrderList(String username);
 
     User getUserById(Long id);
 
