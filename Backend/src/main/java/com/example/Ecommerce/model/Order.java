@@ -16,6 +16,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "`order`")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +33,6 @@ public class Order {
 
     @NotNull
     private String phoneNumber;
-
-    @NotNull
-    private String email;
 
     @NotNull
     private double price;

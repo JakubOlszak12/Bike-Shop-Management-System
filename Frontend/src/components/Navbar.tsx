@@ -17,6 +17,7 @@ export function NavBar({ isAuthenticated }: NavBarProps): ReactElement {
     const handleLogout = () => {
         // Clear the token from cookies
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        navigation("/login")
         window.location.reload();
     };
 

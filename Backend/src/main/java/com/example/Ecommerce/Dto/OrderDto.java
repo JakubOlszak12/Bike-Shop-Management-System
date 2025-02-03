@@ -20,7 +20,6 @@ public class OrderDto{
     String postalCode;
     String city;
     String phoneNumber;
-    String email;
     double price;
     LocalDateTime created_at;
     Long invoiceId;

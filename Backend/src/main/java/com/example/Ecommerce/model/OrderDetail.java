@@ -31,4 +31,8 @@ public class OrderDetail {
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false) // Assuming this is the foreign key in your order_detail table
+    private Product product; // Reference to the Product entity
 }
