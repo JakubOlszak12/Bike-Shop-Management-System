@@ -6,9 +6,9 @@ drop table if exists user_roles;
 drop table if exists order_detail;
 drop table if exists brand;
 drop table if exists category;
-drop table if exists deliveryMethod;
+drop table if exists delivery_method;
 drop table if exists status;
-drop table if exists paymentMethod;
+drop table if exists payment_method;
 drop table if exists invoice;
 drop table if exists size;
 drop table if exists product;
@@ -35,21 +35,21 @@ CREATE TABLE user (
                       email VARCHAR(50) NOT NULL,
                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
                       edited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-                  );
+);
 
 CREATE TABLE size (
                       id INTEGER AUTO_INCREMENT PRIMARY KEY,
                       name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE deliveryMethod (
-                                id INTEGER AUTO_INCREMENT PRIMARY KEY,
-                                name VARCHAR(50) NOT NULL
+CREATE TABLE delivery_method (
+                                 id INTEGER AUTO_INCREMENT PRIMARY KEY,
+                                 name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE paymentMethod (
-                               id INTEGER AUTO_INCREMENT PRIMARY KEY,
-                               name VARCHAR(50) NOT NULL
+CREATE TABLE payment_method (
+                                id INTEGER AUTO_INCREMENT PRIMARY KEY,
+                                name VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE status (
@@ -87,27 +87,28 @@ CREATE TABLE product (
                          pedals VARCHAR(50) NOT NULL,
                          saddle VARCHAR(50) NOT NULL,
                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
-
+                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+                         FOREIGN KEY (brand_id) REFERENCES brand(id),
+                         FOREIGN KEY (category_id) REFERENCES category(id),
+                         FOREIGN KEY (size_id) REFERENCES size(id)
 );
 
 CREATE TABLE `order` (
-                       id INTEGER AUTO_INCREMENT PRIMARY KEY,
-                       user_id INTEGER NOT NULL,
-                       street VARCHAR(100) NOT NULL,
-                       postalCode VARCHAR(8) NOT NULL,
-                       city VARCHAR(30) NOT NULL,
-                       phoneNumber VARCHAR(12) NOT NULL,
-                       email VARCHAR(50) NOT NULL,
-                       price DECIMAL(10, 2) NOT NULL,
-                       created_at TIMESTAMP NOT NULL,
-                       status_id INTEGER NOT NULL,
-                       paymentMethod_id INTEGER NOT NULL,
-                       deliveryMethod_id INTEGER NOT NULL,
-                       FOREIGN KEY (user_id) REFERENCES user(id),
-                       FOREIGN KEY (status_id) REFERENCES status(id),
-                       FOREIGN KEY (paymentMethod_id) REFERENCES paymentMethod(id),
-                       FOREIGN KEY (deliveryMethod_id) REFERENCES deliveryMethod(id)
+                         id INTEGER AUTO_INCREMENT PRIMARY KEY,
+                         user_id INTEGER NOT NULL,
+                         street VARCHAR(100) NOT NULL,
+                         postal_code VARCHAR(8) NOT NULL,
+                         city VARCHAR(30) NOT NULL,
+                         phone_number VARCHAR(12) NOT NULL,
+                         price DECIMAL(10, 2) NOT NULL,
+                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                         status_id INTEGER NOT NULL,
+                         payment_method_id INTEGER NOT NULL,
+                         delivery_method_id INTEGER NOT NULL,
+                         FOREIGN KEY (user_id) REFERENCES user(id),
+                         FOREIGN KEY (status_id) REFERENCES status(id),
+                         FOREIGN KEY (payment_method_id) REFERENCES payment_method(id),
+                         FOREIGN KEY (delivery_method_id) REFERENCES delivery_method(id)
 );
 
 CREATE TABLE order_detail (
@@ -115,8 +116,8 @@ CREATE TABLE order_detail (
                               order_id INTEGER NOT NULL,
                               product_id INTEGER NOT NULL,
                               quantity INTEGER NOT NULL,
-                              unitPrice DECIMAL(10, 2) NOT NULL,
-                              totalPrice DECIMAL(10, 2) NOT NULL,
+                              unit_price DECIMAL(10, 2) NOT NULL,
+                              total_price DECIMAL(10, 2) NOT NULL,
                               FOREIGN KEY (order_id) REFERENCES `order`(id),
                               FOREIGN KEY (product_id) REFERENCES product(id)
 );
@@ -129,7 +130,7 @@ CREATE TABLE invoice (
                          order_id INTEGER NOT NULL,
                          tax DECIMAL(10, 2) NOT NULL,
                          value DECIMAL(10, 2) NOT NULL,
-                         paymentDate TIMESTAMP NOT NULL,
+                         payment_date TIMESTAMP NOT NULL,
                          FOREIGN KEY (user_id) REFERENCES user(id),
                          FOREIGN KEY (order_id) REFERENCES `order`(id)
 );
